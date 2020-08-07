@@ -12,15 +12,16 @@ struct TipBrain {
     var tip: Tip?;
     
     mutating func calcTip(_ total: Float, _ tipPercentage: Int, _ people: Int){
-        let amount = (total * (1 / Float(tipPercentage))) / Float(people);
+        let currentTip: Float = Float(tipPercentage) / 100;
+        let amount = total * (1 + currentTip) / Float(people);
         tip = Tip(amount: amount, people: people, tipPercentage: tipPercentage);
     }
     
     func getAmount() -> String {
-        return String(format: "%.1f", tip?.amount ?? 0.0);
+        return "£\(String(format: "%.2f", tip?.amount ?? 0.0))";
     }
     
     func getInfo() -> String {
-        return "Split between \(tip?.people ?? 0) people, with \(tip?.tipPercentage ?? 0) tip";
+        return "Split between \(tip?.people ?? 0) people, with \(tip?.tipPercentage ?? 0)% tip";
     }
 }
